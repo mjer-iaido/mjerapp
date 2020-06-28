@@ -5,6 +5,7 @@ from shinsa.models import Scoringsheet
 from shinsa.models import Grade
 from shinsa.models import Dojos
 from shinsa.models import Country
+from shinsa.models import Status
 
 #from shinsa.models import Markers
 
@@ -17,4 +18,5 @@ admin.site.register(Scoringsheet)
 admin.site.register(Grade)
 admin.site.register(Dojos)
 admin.site.register(Country)
+admin.site.register(Status)
 #admin.site.register(Markers)

@@ -102,16 +102,78 @@ class Grade(models.Model):
 #        verbose_name='受審段位'
 #        )
 
+class Status(models.Model):
+    status = models.CharField(
+        max_length=20,
+        verbose_name='状態',
+    )
+    status_eng = models.CharField(
+        max_length=20,
+        verbose_name='status',
+    )
+    def __str__(self):
+        return f"{self.status}   : { self.status_eng }"
+
+
 # 受審者テーブル
 class Testee(models.Model):
     testee_name = models.CharField(
         max_length=20,
-        verbose_name='受審者'
+        verbose_name='Name Japanese'
         )
-    grade = models.ForeignKey(
-        Grade,
-        verbose_name='受審段位',
+    testee_name_eng = models.CharField(
+        max_length=20,
+        verbose_name='Name English'
+        )
+    status = models.ForeignKey(
+        Status,
+        verbose_name='状態',
         on_delete=models.CASCADE
+        )
+    first_grade = models.DateField(
+        verbose_name='初段取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+    second_grade = models.DateField(
+        verbose_name='二段取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+    third_grade = models.DateField(
+        verbose_name='三段取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+    fourth_grade = models.DateField(
+        verbose_name='四段取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+    fifth_grade = models.DateField(
+        verbose_name='五段取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+    sixth_grade = models.DateField(
+        verbose_name='六段取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+    renshi = models.DateField(
+        verbose_name='練士取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+    seventh_grade = models.DateField(
+        verbose_name='七段取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
+    )
+    kyoshi = models.DateField(
+        verbose_name='教士取得日(yyyy-mm-dd)',
+        blank=True,
+        null=True
     )
     dojo = models.ForeignKey(
         Dojos,
@@ -181,6 +243,13 @@ class Scoringsheet(models.Model):
         Testee,
         verbose_name='受審者',
         on_delete=models.PROTECT
+    )
+    grade = models.ForeignKey(
+        Grade,
+        verbose_name='受審段位',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
     )
     score1 = models.FloatField(
         choices=POINT_CHOICES,

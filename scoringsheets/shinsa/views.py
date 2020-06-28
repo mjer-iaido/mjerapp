@@ -13,7 +13,7 @@ from urllib.parse import urlencode
 from django.db.models import F
 from django.db.models import Q
 
-from .models import Events, Grade, Testee, Scoringsheet, Dojos, Country
+from .models import Events, Grade, Testee, Scoringsheet, Dojos, Country, Status
 from .forms import ScoringsheetForm
 
 #weasyprint --start--
@@ -76,8 +76,17 @@ class TesteeDetailView(DetailView):
 class TesteeUpdateView(UpdateView):
     model = Testee
     fields = [
-        "grade",
-        "dojo"
+        "status",
+        "dojo",
+        "first_grade",
+        "second_grade",
+        "third_grade",
+        "fourth_grade",
+        "fifth_grade",
+        "sixth_grade",
+        "renshi",
+        "seventh_grade",
+        "kyoshi"
         ]
     success_url = reverse_lazy("scoringsheet")
 
@@ -85,7 +94,8 @@ class TesteeCreateView(CreateView):
     model = Testee
     fields = [
         "testee_name",
-        "grade",
+        "testee_name_eng",
+        "status",
         "dojo"
         ]
     def get_success_url(self):
@@ -110,6 +120,7 @@ class ScoringsheetCreateView(CreateView):
     template_name = 'shinsa/scoringsheet_form.html'
     fields = [
         "testee",
+#        "grade",
         "score1",
         "score2",
         "score3",

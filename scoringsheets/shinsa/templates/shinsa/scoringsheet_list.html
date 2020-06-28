@@ -97,7 +97,29 @@
                           {{ scoringsheet.testee.testee_name }}
                       </a>
                   </td>
-                  <td class="text-center" width="">{{ scoringsheet.testee.grade.grade_name }}</td>
+                  <td class="text-center" width="">
+                    {% if scoringsheet.estee.kyoshi %}
+                        <a>十段</a>
+                    {% elif scoringsheet.testee.seventh_grade %}
+                        <a>教士</a>
+                    {% elif scoringsheet.testee.renshi %}
+                        <a>七段</a>
+                    {% elif scoringsheet.testee.sixth_grade %}
+                        <a>練士</a>
+                    {% elif scoringsheet.testee.fifth_grade %}
+                        <a>六段</a>
+                    {% elif scoringsheet.testee.fourth_grade %}
+                        <a>五段</a>
+                    {% elif scoringsheet.testee.third_grade %}
+                        <a>四段</a>
+                    {% elif scoringsheet.testee.second_grade %}
+                        <a>三段</a>
+                    {% elif scoringsheet.testee.first_grade %}
+                        <a>二段</a>
+                    {% else %}
+                        <a>初段</a>
+                    {% endif %}
+                  </td>
                   <td class="text-center" width="">{{ scoringsheet.score1 }}</td>
                   <td class="text-center" width="">{{ scoringsheet.score2 }}</td>
                   <td class="text-center" width="">{{ scoringsheet.score3 }}</td>
@@ -113,11 +135,9 @@
                   {% if p_totalpoints >= 35 %}
                       <a>合格</a>
                       {% success as pratical_judge %}
-                      {{ pratical_judge }}
                   {% else %}
                       <a>不合格</a>
                       {% failure as pratical_judge %}
-                      {{ pratical_judge }}
                   {% endif %}
                 </span>
               </td>
@@ -128,11 +148,9 @@
                   {% if scoringsheet.written_points >= 80 %}
                       <a>合格</a>
                       {% success as written_judge %}
-                      {{ written_judge }}
                   {% else %}
                       <a>不合格</a>
                       {% failure as written_judge %}
-                      {{ written_judge }}
                   {% endif %}
               </td>
               <td class="fontred" width="">

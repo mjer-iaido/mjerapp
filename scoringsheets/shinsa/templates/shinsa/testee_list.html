@@ -1,13 +1,29 @@
 {% extends "base.html" %}
 
 {% block body %}
+<style>
+  @page {
+      size: landscape;
+      margin: 0.2in 0.1in 0.2in 0.1in;
+  }
+  table tr span {
+	    white-space: nowrap;
+  }
+  table td span {
+      white-space: nowrap;
+  }
+  .fontred {
+      color: red;
+      text-align: center;
+  }
+</style>
 
   <div class="container">
     <h1>Members List</h1>
 
     <div class="container">
         {% for testee in object_list|slice:":1" %}
-        <h3> Selected Dojo is {{ testee.dojo.dojo_name_eng }}</h3>
+        <h3> Selected Dojo is {{ testee.dojo.dojo_name_eng }}</h3><br>
         <a href="{% url 'create_testee' %}?dojo={{ testee.dojo.id }}">
             <button class="btn btn-primary">会員登録</button>
         </a>
@@ -15,27 +31,51 @@
         {% endfor %}
     </div>
 
-    <table style="font-size: 1.2rem; width="100%" class="table table-striped table-bordered table-hover">
+    <table style="font-size: 0.9rem;" width="" class="table table-striped table-bordered table-hover">
         <hr>
           <thead>
             <tr>
                 <th class="text-center" width="5%" >
-                    <h3>NO</h3>
+                    <a>NO</a>
                 </th>
-                <th class="text-center" width="35%" >
-                    <h3>Name</h3>
+                <th class="text-center" width="20%" >
+                    <a>Name</a>
                 </th>
-                <th class="text-center" width="15%" >
-                    <h3>Grade</h3>
+                <th class="text-center" width="5%" >
+                    <a>Status</a>
                 </th>
-                <th class="text-center" width="15%" >
-                    <h3>Next Grade</h3>
+                <th class="text-center" width="6%" >
+                    <a>Grade</a>
                 </th>
-                <th class="text-center" width="15%" >
-                    <h3>Update</h3>
+                <th class="text-center" width="6%" >
+                    <a>初段</a>
                 </th>
-                <th class="text-center" width="30%" >
-                    <h3></h3>
+                <th class="text-center" width="6%" >
+                    <a>二段</a>
+                </th>
+                <th class="text-center" width="6%" >
+                    <a>三段</a>
+                </th>
+                <th class="text-center" width="6%" >
+                    <a>四段</a>
+                </th>
+                <th class="text-center" width="6%" >
+                    <a>五段</a>
+                </th>
+                <th class="text-center" width="6%" >
+                    <a>六段</a>
+                </th>
+                <th class="text-center" width="6%" >
+                    <a>練士</a>
+                </th>
+                <th class="text-center" width="6%" >
+                    <a>七段</a>
+                </th>
+                <th class="text-center" width="6%" >
+                    <a>教士</a>
+                </th>
+                <th class="text-center" width="10%" >
+                    <a>Update</a>
                 </th>
             </tr>
             {% for testee in object_list %}
@@ -47,16 +87,61 @@
                     {{ testee.testee_name }}
                 </td>
                 <td class="text-center">
+                  {{ testee.status }}
                 </td>
                 <td class="text-center">
-                    {{ testee.grade }}
+                <!-- current grade -->
+                    {% if testee.kyoshi %}
+                        <a>教士</a>
+                    {% elif testee.seventh_grade %}
+                        <a>七段</a>
+                    {% elif testee.renshi %}
+                        <a>練士</a>
+                    {% elif testee.sixth_grade %}
+                        <a>六段</a>
+                    {% elif testee.fifth_grade %}
+                        <a>五段</a>
+                    {% elif testee.fourth_grade %}
+                        <a>四段</a>
+                    {% elif testee.third_grade %}
+                        <a>三段</a>
+                    {% elif testee.second_grade %}
+                        <a>二段</a>
+                    {% elif testee.first_grade %}
+                        <a>初段</a>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {{ testee.first_grade }}
+                </td>
+                <td class="text-center">
+                    {{ testee.second_grade }}
+                </td>
+                <td class="text-center">
+                    {{ testee.third_grade }}
+                </td>
+                <td class="text-center">
+                    {{ testee.fourth_grade }}
+                </td>
+                <td class="text-center">
+                    {{ testee.fifth_grade }}
+                </td>
+                <td class="text-center">
+                    {{ testee.sixth_grade }}
+                </td>
+                <td class="text-center">
+                    {{ testee.renshi }}
+                </td>
+                <td class="text-center">
+                    {{ testee.seventh_grade }}
+                </td>
+                <td class="text-center">
+                    {{ testee.kyoshi }}
                 </td>
                 <td class="text-center">
                     <a href="{% url 'testee_update' testee.id %}">
                         <button class="btn btn-primary">Update</button>
                     </a>
-                </td>
-                <td class="text-center">
                 </td>
             </tr>
             {% endfor %}
