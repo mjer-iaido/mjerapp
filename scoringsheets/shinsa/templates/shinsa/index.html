@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block body %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Dashboard</h1>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+
+<!-- ============================== ここから以下を追加 ============================== -->
+<!-- Main content -->
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+  <div class="row">
+      <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+              <div class="inner">
+                  <h4>admin</h4>
+                  <p>administrator page</p>
+              </div>
+              <div class="icon">
+                  <i class="ion ion-android-share"></i>
+              </div>
+              <a href="admin" class="small-box-footer">管理画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+      </div>
+
+      <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+              <div class="inner">
+                    <h4>PDFtoExcel</h4>
+                    <p>PDF→Excel変換</p>
+              </div>
+              <div class="icon">
+                  <i class="ion ion-android-share"></i>
+              </div>
+              <a href="#" class="small-box-footer">管理画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+    </div>
+        <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h4>受審者登録画面</h4>
+                    <p>審査受審者を登録する</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-document"></i>
+                </div>
+                <a href="create_testee" class="small-box-footer">登録画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h4>採点表作成</h4>
+                    <p>採点表を登録する</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-document"></i>
+                </div>
+                <a href="scoringsheet_form" class="small-box-footer">採点表登録画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h4>イベント</h4>
+                    <p>イベント一覧を表示する</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-document"></i>
+                </div>
+                <a href="events" class="small-box-footer">イベント選択画面へ移動 <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-7 connectedSortable"></section>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+</section>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load utils %}
+{% load sum_points %}
+
+{% block body %}
+<style>
+  @page {
+      size: landscape;
+      margin: 0.2in 0.1in 0.2in 0.1in;
+  }
+  table tr span {
+	    white-space: nowrap;
+  }
+  table td span {
+      white-space: nowrap;
+  }
+  .fontred {
+      color: red;
+      text-align: center;
+  }
+
+</style>
+<div class="container">
+  {% for scoringsheet in object_list|slice:":1" %}
+      <h3> {{ scoringsheet.events.event_name }}  - 昇段審査採点表</h3>
+      <p>  {{ scoringsheet.events.event_date }} </p>
+  {% endfor %}
+</div>
+<table style="font-size: 0.77rem; width="100%" class="table table-striped table-bordered table-hover">
+  <div class="container">
+    {% for scoringsheet in object_list|slice:":1" %}
+    <thead>
+      <tr>
+        <th class="text-center">
+            <span>No</span>
+        </th>
+        <th class="text-center">
+            <span>受審者</span>
+        </th>
+        <th class="text-center">
+            <span>受審段</span>
+        </th>
+        <th class="text-center">
+            <span>
+              {{ scoringsheet.events.marker1 }}
+            </span>
+        </th>
+        <th class="text-center">
+            <span>
+              {{ scoringsheet.events.marker2 }}
+            </span>
+        </th>
+        <th class="text-center">
+            <span>
+              {{ scoringsheet.events.marker3 }}
+            </span>
+        </th>
+        <th class="text-center">
+            <span>
+              {{ scoringsheet.events.marker4 }}
+            </span>
+        </th>
+        <th class="text-center">
+            <span>
+              {{ scoringsheet.events.marker5 }}
+            </span>
+        </th>
+        <th class="fontred">
+              <span>実技点数</span>
+        </th>
+        <th class="text-center">
+              <span>実技合否</span>
+        </th>
+        <th class="fontred">
+              <span>学科点数</span>
+        </th>
+        <th class="text-center">
+              <span>学科合否</span>
+        </th>
+        <th class="fontred">
+              <span>総合合否</span>
+        </th>
+      </tr>
+    </thead>
+    {% endfor %}
+  </div>
+     <!-- 表のデータ部分の表示-->
+  <div class="row">
+      <tbody>
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          {% for scoringsheet in object_list %}
+          <tr class="odd gradeX text-center">
+              <h3 class="post-title">
+                  <td class="text-center" width="">{{ forloop.counter }}</td>
+                  <td class="text-center" width="">
+                      <a href="{% url 'scoringsheet_update' scoringsheet.id %}?event={{ scoringsheet.events.id }}">
+                          {{ scoringsheet.testee.testee_name }}
+                      </a>
+                  </td>
+                  <td class="text-center" width="">{{ scoringsheet.testee.grade.grade_name }}</td>
+                  <td class="text-center" width="">{{ scoringsheet.score1 }}</td>
+                  <td class="text-center" width="">{{ scoringsheet.score2 }}</td>
+                  <td class="text-center" width="">{{ scoringsheet.score3 }}</td>
+                  <td class="text-center" width="">{{ scoringsheet.score4 }}</td>
+                  <td class="text-center" width="">{{ scoringsheet.score5 }}</td>
+                  <td class="fontred" width="">
+                          {% points scoringsheet.score1 scoringsheet.score2 scoringsheet.score3 scoringsheet.score4 scoringsheet.score5 as p_totalpoints %}
+                          {{ p_totalpoints }}
+                  </td>
+              </h3>
+              <td class="text-center" width="">
+                <span>
+                  {% if p_totalpoints >= 35 %}
+                      <a>合格</a>
+                      {% success as pratical_judge %}
+                      {{ pratical_judge }}
+                  {% else %}
+                      <a>不合格</a>
+                      {% failure as pratical_judge %}
+                      {{ pratical_judge }}
+                  {% endif %}
+                </span>
+              </td>
+              <td class="fontred" width="">
+                      {{ scoringsheet.written_points }}
+              </td>
+              <td class="text-center" width="">
+                  {% if scoringsheet.written_points >= 80 %}
+                      <a>合格</a>
+                      {% success as written_judge %}
+                      {{ written_judge }}
+                  {% else %}
+                      <a>不合格</a>
+                      {% failure as written_judge %}
+                      {{ written_judge }}
+                  {% endif %}
+              </td>
+              <td class="fontred" width="">
+                  {% if pratical_judge == "success" and written_judge == "success" %}
+                      <a>合格</a>
+                  {% else %}
+                      <a>不合格</a>
+                  {% endif %}
+              </td>
+          </tr>
+          {% endfor %}
+        </div>
+      </tbody>
+  </div>
+</table>
+<!-- PDF export -->
+<form action="/exportpdf/shinsa/" method="get" target="_blank">
+    <input  type="hidden" name="path" value={{ request.build_absolute_uri }} >
+    <button class="btn btn-primary" type="submit"> PDF出力 </button>
+</form>
+{% endblock %}
