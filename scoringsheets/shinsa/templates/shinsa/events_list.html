@@ -38,10 +38,10 @@
                     </a>
                 </td>
                 <td class="text-center">
-                    <a href="#">
+                  <a href="{% url 'embuscoringsheet_form' %}?event={{ events.id }}">
                         <button class="btn btn-default">Register</button>
                     </a>
-                    <a href="#">
+                    <a href="{% url 'embuscoringsheet' %}?event={{ events.id }}">
                         <button class="btn btn-danger">演武会　採点表</button>
                     </a>
                 </td>

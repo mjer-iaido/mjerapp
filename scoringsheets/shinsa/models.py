@@ -27,11 +27,15 @@ class Events(models.Model):
     )
     marker4 = models.CharField(
         max_length=25,
-        verbose_name='審査員4'
+        verbose_name='審査員4',
+        blank=True,
+        null=True
     )
     marker5 = models.CharField(
         max_length=25,
-        verbose_name='審査員5'
+        verbose_name='審査員5',
+        blank=True,
+        null=True
     )
     def __str__(self):
         return self.event_name
@@ -118,6 +122,7 @@ class Status(models.Model):
 # 受審者テーブル
 class Testee(models.Model):
     testee_name = models.CharField(
+        unique=True,
         max_length=20,
         verbose_name='Name Japanese'
         )
@@ -187,7 +192,7 @@ class Testee(models.Model):
 
 
 
-# 採点表テーブル
+# 昇段審査採点表テーブル
 class Scoringsheet(models.Model):
     POINT_CHOICES = (
         (0.0, 0.0),
@@ -285,6 +290,103 @@ class Scoringsheet(models.Model):
         choices=POINT_CHOICES2,
         default=0
         )
+    events = models.ForeignKey(
+        Events,
+        verbose_name='受審催事',
+        on_delete=models.PROTECT,
+    )
+    def __str__(self):
+        return f"{self.events.event_name}, { self.testee.testee_name }"
+
+# 演武審査採点表テーブル
+class Embuscoringsheet(models.Model):
+    POINT_CHOICES = (
+        (0.0, 0.0),
+        (0.5, 0.5),
+        (1.0, 1.0),
+        (1.5, 1.5),
+        (2.0, 2.0),
+        (2.5, 2.5),
+        (3.0, 3.0),
+        (3.5, 3.5),
+        (4.0, 4.0),
+        (4.5, 4.5),
+        (5.0, 5.0),
+        (5.5, 5.5),
+        (6.0, 6.0),
+        (6.5, 6.5),
+        (7.0, 7.0),
+        (7.5, 7.5),
+        (8.0, 8.0),
+        (8.5, 8.5),
+        (9.0, 9.0),
+        (9.5, 9.5),
+        (10.0, 10.0),
+    )
+    POINT_CHOICES2 = (
+        (0, 0),
+        (5, 5),
+        (10, 10),
+        (15, 15),
+        (20, 20),
+        (25, 25),
+        (30, 30),
+        (35, 35),
+        (40, 40),
+        (45, 45),
+        (50, 50),
+        (55, 55),
+        (60, 60),
+        (65, 65),
+        (70, 70),
+        (75, 75),
+        (80, 80),
+        (85, 85),
+        (90, 90),
+        (95, 95),
+        (100, 100),
+    )
+#    RESULT_CHOICES = (
+#        ("不合格", "不合格"),
+#        ("合格", "合格"),
+#    )
+    testee = models.ForeignKey(
+        Testee,
+        verbose_name='受審者',
+        on_delete=models.PROTECT
+    )
+    grade = models.ForeignKey(
+        Grade,
+        verbose_name='受審段位',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
+    score1 = models.FloatField(
+        choices=POINT_CHOICES,
+        verbose_name='審査員１',
+        default=0.0
+    )
+    score2 = models.FloatField(
+        choices=POINT_CHOICES,
+        verbose_name='審査員２',
+        default=0.0
+    )
+    score3 = models.FloatField(
+        choices=POINT_CHOICES,
+        verbose_name='審査員３',
+        default=0.0
+    )
+    score4 = models.FloatField(
+        choices=POINT_CHOICES,
+        verbose_name='審査員４',
+        default=0.0
+    )
+    score5 = models.FloatField(
+        choices=POINT_CHOICES,
+        verbose_name='審査員５',
+        default=0.0
+    )
     events = models.ForeignKey(
         Events,
         verbose_name='受審催事',

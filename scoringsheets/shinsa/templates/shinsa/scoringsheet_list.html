@@ -31,53 +31,53 @@
     {% for scoringsheet in object_list|slice:":1" %}
     <thead>
       <tr>
-        <th class="text-center">
+        <th class="text-center" width="4%" >
             <span>No</span>
         </th>
-        <th class="text-center">
+        <th class="text-center" width="20%" >
             <span>受審者</span>
         </th>
-        <th class="text-center">
+        <th class="text-center" width="6%" >
             <span>受審段</span>
         </th>
-        <th class="text-center">
+        <th class="text-center" width="8%" >
             <span>
               {{ scoringsheet.events.marker1 }}
             </span>
         </th>
-        <th class="text-center">
+        <th class="text-center" width="8%" >
             <span>
               {{ scoringsheet.events.marker2 }}
             </span>
         </th>
-        <th class="text-center">
+        <th class="text-center" width="8%" >
             <span>
               {{ scoringsheet.events.marker3 }}
             </span>
         </th>
-        <th class="text-center">
+        <th class="text-center" width="8%" >
             <span>
               {{ scoringsheet.events.marker4 }}
             </span>
         </th>
-        <th class="text-center">
+        <th class="text-center" width="8%" >
             <span>
               {{ scoringsheet.events.marker5 }}
             </span>
         </th>
-        <th class="fontred">
+        <th class="fontred" width="6%" >
               <span>実技点数</span>
         </th>
-        <th class="text-center">
+        <th class="text-center" width="6%" >
               <span>実技合否</span>
         </th>
-        <th class="fontred">
+        <th class="fontred" width="6%" >
               <span>学科点数</span>
         </th>
-        <th class="text-center">
+        <th class="text-center" width="6%" >
               <span>学科合否</span>
         </th>
-        <th class="fontred">
+        <th class="fontred" width="6%" >
               <span>総合合否</span>
         </th>
       </tr>
@@ -98,27 +98,7 @@
                       </a>
                   </td>
                   <td class="text-center" width="">
-                    {% if scoringsheet.estee.kyoshi %}
-                        <a>十段</a>
-                    {% elif scoringsheet.testee.seventh_grade %}
-                        <a>教士</a>
-                    {% elif scoringsheet.testee.renshi %}
-                        <a>七段</a>
-                    {% elif scoringsheet.testee.sixth_grade %}
-                        <a>練士</a>
-                    {% elif scoringsheet.testee.fifth_grade %}
-                        <a>六段</a>
-                    {% elif scoringsheet.testee.fourth_grade %}
-                        <a>五段</a>
-                    {% elif scoringsheet.testee.third_grade %}
-                        <a>四段</a>
-                    {% elif scoringsheet.testee.second_grade %}
-                        <a>三段</a>
-                    {% elif scoringsheet.testee.first_grade %}
-                        <a>二段</a>
-                    {% else %}
-                        <a>初段</a>
-                    {% endif %}
+                      {{ scoringsheet.grade.grade_name }}
                   </td>
                   <td class="text-center" width="">{{ scoringsheet.score1 }}</td>
                   <td class="text-center" width="">{{ scoringsheet.score2 }}</td>

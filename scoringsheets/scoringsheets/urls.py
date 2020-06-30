@@ -42,6 +42,13 @@ from shinsa.views import ScoringsheetCreateView
 from shinsa.views import ScoringsheetDetailView
 from shinsa.views import ScoringsheetUpdateView
 
+# embuscoringsheet
+from shinsa import views
+from shinsa.views import EmbuscoringsheetListView
+from shinsa.views import EmbuscoringsheetCreateView
+from shinsa.views import EmbuscoringsheetUpdateView
+
+
 ## from shinsa.views import ScoringsheetCreateFormsetView
 
 urlpatterns = [
@@ -75,6 +82,13 @@ urlpatterns = [
     path('scoringsheet_detail/<int:pk>', ScoringsheetDetailView.as_view(), name="scoringsheet_detail"),
     path('scoringseet_update/<int:pk>', ScoringsheetUpdateView.as_view(), name="scoringsheet_update"),
 #    path('form_scoringsheet', ScoringsheetCreateFormsetView.as_view(), name="form_scoringsheet"),
+
+# Enmu Scoringsheet
+    path('embuscoringsheet', EmbuscoringsheetListView.as_view(), name="embuscoringsheet"),
+    path('embuscoringsheet_form', EmbuscoringsheetCreateView.as_view(), name="embuscoringsheet_form"),
+    path('create_embuscoringsheet', EmbuscoringsheetCreateView.as_view(), name="create_embuscoringsheet"),
+    path('embuscoringseet_update/<int:pk>', EmbuscoringsheetUpdateView.as_view(), name="embuscoringsheet_update"),
+
 # Admin
     path('admin/', admin.site.urls),
 ]

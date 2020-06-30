@@ -13,7 +13,7 @@ from urllib.parse import urlencode
 from django.db.models import F
 from django.db.models import Q
 
-from .models import Events, Grade, Testee, Scoringsheet, Dojos, Country, Status
+from .models import Events, Grade, Testee, Scoringsheet, Dojos, Country, Status, Embuscoringsheet
 from .forms import ScoringsheetForm
 
 #weasyprint --start--
@@ -120,13 +120,13 @@ class ScoringsheetCreateView(CreateView):
     template_name = 'shinsa/scoringsheet_form.html'
     fields = [
         "testee",
-#        "grade",
-        "score1",
-        "score2",
-        "score3",
-        "score4",
-        "score5",
-        "written_points",
+        "grade",
+#        "score1",
+#        "score2",
+#        "score3",
+#        "score4",
+#        "score5",
+#        "written_points",
         "events"
         ]
     success_url = reverse_lazy("scoringsheet_form")
@@ -147,3 +147,38 @@ class ScoringsheetUpdateView(UpdateView):
         ]
     def get_success_url(self):
         return "".join([reverse('scoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
+
+class EmbuscoringsheetListView(ListView):
+    model = Embuscoringsheet
+#    def get_context_data(self, **kwargs):
+#        context = super().get_context_data(**kwargs)
+#        context["judge"] = 0
+#        return context
+
+    def get_queryset(self):
+        eventparam = self.request.GET.get('event')
+        object_list = Embuscoringsheet.objects.filter(
+                        Q(events__id=eventparam))
+        return object_list
+
+class EmbuscoringsheetCreateView(CreateView):
+    model = Embuscoringsheet
+    template_name = 'shinsa/embuscoringsheet_form.html'
+    fields = [
+        "testee",
+        "grade",
+        "events"
+        ]
+    success_url = reverse_lazy("embuscoringsheet_form")
+
+class EmbuscoringsheetUpdateView(UpdateView):
+    model = Embuscoringsheet
+    fields = [
+        "score1",
+        "score2",
+        "score3",
+        "score4",
+        "score5",
+        ]
+    def get_success_url(self):
+        return "".join([reverse('embuscoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
