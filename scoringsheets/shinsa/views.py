@@ -88,7 +88,10 @@ class TesteeUpdateView(UpdateView):
         "seventh_grade",
         "kyoshi"
         ]
-    success_url = reverse_lazy("scoringsheet")
+#    success_url = reverse_lazy("scoringsheet")
+    def get_success_url(self):
+        return "".join([reverse('testee'),'?', urlencode(dict(dojo=self.request.GET.get('dojo')))])
+
 
 class TesteeCreateView(CreateView):
     model = Testee
@@ -135,7 +138,7 @@ class ScoringsheetDetailView(DetailView):
     model = Scoringsheet
     template_name = 'shinsa/scoringsheet_detail.html'
 
-class ScoringsheetUpdateView(UpdateView):
+class Scoringsheet5UpdateView(UpdateView):
     model = Scoringsheet
     fields = [
         "score1",
@@ -147,6 +150,53 @@ class ScoringsheetUpdateView(UpdateView):
         ]
     def get_success_url(self):
         return "".join([reverse('scoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
+
+    def get_form(self):
+        form = super(Scoringsheet5UpdateView, self).get_form()
+        form.fields['score1'].label = self.kwargs.get('marker1')
+        form.fields['score2'].label = self.kwargs.get('marker2')
+        form.fields['score3'].label = self.kwargs.get('marker3')
+        form.fields['score4'].label = self.kwargs.get('marker4')
+        form.fields['score5'].label = self.kwargs.get('marker5')
+        return form
+
+class Scoringsheet4UpdateView(UpdateView):
+    model = Scoringsheet
+    fields = [
+        "score1",
+        "score2",
+        "score3",
+        "score4",
+        "written_points",
+        ]
+    def get_success_url(self):
+        return "".join([reverse('scoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
+
+    def get_form(self):
+        form = super(Scoringsheet4UpdateView, self).get_form()
+        form.fields['score1'].label = self.kwargs.get('marker1')
+        form.fields['score2'].label = self.kwargs.get('marker2')
+        form.fields['score3'].label = self.kwargs.get('marker3')
+        form.fields['score4'].label = self.kwargs.get('marker4')
+        return form
+
+class Scoringsheet3UpdateView(UpdateView):
+    model = Scoringsheet
+    fields = [
+        "score1",
+        "score2",
+        "score3",
+        "written_points",
+        ]
+    def get_success_url(self):
+        return "".join([reverse('scoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
+
+    def get_form(self):
+        form = super(Scoringsheet3UpdateView, self).get_form()
+        form.fields['score1'].label = self.kwargs.get('marker1')
+        form.fields['score2'].label = self.kwargs.get('marker2')
+        form.fields['score3'].label = self.kwargs.get('marker3')
+        return form
 
 class EmbuscoringsheetListView(ListView):
     model = Embuscoringsheet
@@ -171,7 +221,7 @@ class EmbuscoringsheetCreateView(CreateView):
         ]
     success_url = reverse_lazy("embuscoringsheet_form")
 
-class EmbuscoringsheetUpdateView(UpdateView):
+class Embuscoringsheet5UpdateView(UpdateView):
     model = Embuscoringsheet
     fields = [
         "score1",
@@ -182,3 +232,48 @@ class EmbuscoringsheetUpdateView(UpdateView):
         ]
     def get_success_url(self):
         return "".join([reverse('embuscoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
+
+    def get_form(self):
+        form = super(Embuscoringsheet5UpdateView, self).get_form()
+        form.fields['score1'].label = self.kwargs.get('marker1')
+        form.fields['score2'].label = self.kwargs.get('marker2')
+        form.fields['score3'].label = self.kwargs.get('marker3')
+        form.fields['score4'].label = self.kwargs.get('marker4')
+        form.fields['score5'].label = self.kwargs.get('marker5')
+        return form
+
+class Embuscoringsheet4UpdateView(UpdateView):
+    model = Embuscoringsheet
+    fields = [
+        "score1",
+        "score2",
+        "score3",
+        "score4",
+        ]
+    def get_success_url(self):
+        return "".join([reverse('embuscoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
+
+    def get_form(self):
+        form = super(Embuscoringsheet4UpdateView, self).get_form()
+        form.fields['score1'].label = self.kwargs.get('marker1')
+        form.fields['score2'].label = self.kwargs.get('marker2')
+        form.fields['score3'].label = self.kwargs.get('marker3')
+        form.fields['score4'].label = self.kwargs.get('marker4')
+        return form
+
+class Embuscoringsheet3UpdateView(UpdateView):
+    model = Embuscoringsheet
+    fields = [
+        "score1",
+        "score2",
+        "score3",
+        ]
+    def get_success_url(self):
+        return "".join([reverse('embuscoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
+
+    def get_form(self):
+        form = super(Embuscoringsheet3UpdateView, self).get_form()
+        form.fields['score1'].label = self.kwargs.get('marker1')
+        form.fields['score2'].label = self.kwargs.get('marker2')
+        form.fields['score3'].label = self.kwargs.get('marker3')
+        return form

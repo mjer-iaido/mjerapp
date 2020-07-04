@@ -1,7 +1,9 @@
 from django.db import models
-
+# import for validation
+from django.core.validators import MinLengthValidator, RegexValidator
+from django.core.exceptions import ValidationError
 # Create your models here.
-# 審査員テーブル
+
 # イベントテーブル
 class Events(models.Model):
     event_name = models.CharField(
@@ -55,12 +57,22 @@ class Country(models.Model):
 
 # 道場テーブル
 class Dojos(models.Model):
+    dojo_number = models.CharField(
+        unique=True,
+        verbose_name='道場番号',
+        max_length=4,
+        validators=[
+            MinLengthValidator(4, 'Four digits'),
+            RegexValidator(r'^[0-9]*$', 'only numbers')],
+        blank=True,
+        null=True
+    )
     dojo_name = models.CharField(
-        verbose_name='道場',
+        verbose_name='道場名',
         max_length=50
     )
     dojo_name_eng = models.CharField(
-        verbose_name='Dojo',
+        verbose_name='Dojo Name',
         max_length=50
     )
     country = models.ForeignKey(
@@ -69,8 +81,11 @@ class Dojos(models.Model):
         on_delete=models.CASCADE
         )
 
+    class Meta:
+        ordering = ('dojo_number', )
+
     def __str__(self):
-        return f"{self.dojo_name}, { self.country.country_eng }"
+        return f"{self.dojo_number}, {self.dojo_name}, { self.country.country_eng }"
 
 # 段位テーブル
 class Grade(models.Model):
@@ -121,8 +136,17 @@ class Status(models.Model):
 
 # 受審者テーブル
 class Testee(models.Model):
-    testee_name = models.CharField(
+    membership_number = models.CharField(
         unique=True,
+        verbose_name='会員番号',
+        max_length=7,
+        validators=[
+            MinLengthValidator(7, 'Seven digits'),
+            RegexValidator(r'^[0-9]*$', 'only numbers')],
+        blank=True,
+        null=True
+    )
+    testee_name = models.CharField(
         max_length=20,
         verbose_name='Name Japanese'
         )
@@ -187,10 +211,11 @@ class Testee(models.Model):
     )
 #    def __str__(self):
 #        return self.dojo_name
+    class Meta:
+        ordering = ('membership_number', )
+
     def __str__(self):
-        return f"{self.testee_name}   : { self.dojo.dojo_name }"
-
-
+        return f"{self.membership_number}, {self.testee_name}   : { self.dojo.dojo_name }"
 
 # 昇段審査採点表テーブル
 class Scoringsheet(models.Model):

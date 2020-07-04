@@ -35,6 +35,11 @@
                 <th class="text-center" width="5%" >
                     <a>NO</a>
                 </th>
+                <th class="text-center" width="5%" >
+                  <span>
+                    <a>会員番号</a>
+                  </span>
+                </th>
                 <th class="text-center" width="20%" >
                     <a>Name</a>
                 </th>
@@ -58,6 +63,11 @@
             <tr>
                 <td class="text-center">
                     {{ forloop.counter }}
+                </td>
+                <td class="text-center">
+                  <span>
+                    {{ testee.membership_number }}
+                  </span>
                 </td>
                 <td class="text-center">
                   <span>
@@ -116,7 +126,7 @@
                   </span>
                 </td>
                 <td class="text-center">
-                    <a href="{% url 'testee_update' testee.id %}">
+                    <a href="{% url 'testee_update' testee.id %}?dojo={{ testee.dojo.id }}">
                         <button class="btn btn-primary">Update</button>
                     </a>
                 </td>

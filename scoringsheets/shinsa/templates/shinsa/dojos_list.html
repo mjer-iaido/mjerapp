@@ -4,7 +4,7 @@
   <div class="container">
     <div class="container">
       {% for dojos in object_list|slice:":1" %}
-          <h3> Selected country is {{ dojos.country.country_eng }}</h3>
+          <h3> Selected country is {{ dojos.dojo_number }} : {{ dojos.country.country_eng }}</h3>
       {% endfor %}
     </div>
     <input type="button" value="戻る" onClick="javascript:history.go(-1);">

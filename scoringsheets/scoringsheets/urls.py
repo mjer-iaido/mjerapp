@@ -35,18 +35,22 @@ from shinsa.views import TesteeUpdateView
 ##from shinsa.views import TesteeScoringsheetCreateFormsetView
 #from shinsa.views import TesteeScoringsheetUpdateFormsetView
 
-# scoringsheet --start--
+# scoringsheet
 from shinsa import views
 from shinsa.views import ScoringsheetListView
 from shinsa.views import ScoringsheetCreateView
 from shinsa.views import ScoringsheetDetailView
-from shinsa.views import ScoringsheetUpdateView
+from shinsa.views import Scoringsheet5UpdateView
+from shinsa.views import Scoringsheet4UpdateView
+from shinsa.views import Scoringsheet3UpdateView
 
 # embuscoringsheet
 from shinsa import views
 from shinsa.views import EmbuscoringsheetListView
 from shinsa.views import EmbuscoringsheetCreateView
-from shinsa.views import EmbuscoringsheetUpdateView
+from shinsa.views import Embuscoringsheet5UpdateView
+from shinsa.views import Embuscoringsheet4UpdateView
+from shinsa.views import Embuscoringsheet3UpdateView
 
 
 ## from shinsa.views import ScoringsheetCreateFormsetView
@@ -80,14 +84,20 @@ urlpatterns = [
     path('create_scoringsheet', ScoringsheetCreateView.as_view(), name="create_scoringsheet"),
     path('scoringsheet_form', ScoringsheetCreateView.as_view(), name="scoringsheet_form"),
     path('scoringsheet_detail/<int:pk>', ScoringsheetDetailView.as_view(), name="scoringsheet_detail"),
-    path('scoringseet_update/<int:pk>', ScoringsheetUpdateView.as_view(), name="scoringsheet_update"),
+#    path('scoringseet_update/<int:pk>', ScoringsheetUpdateView.as_view(), name="scoringsheet_update"),
+    path('scoringseet5_update/<str:marker1>/<str:marker2>/<str:marker3>/<str:marker4>/<str:marker5>/<int:pk>', Scoringsheet5UpdateView.as_view(), name="scoringsheet5_update"),
+    path('scoringseet4_update/<str:marker1>/<str:marker2>/<str:marker3>/<str:marker4>/<int:pk>', Scoringsheet4UpdateView.as_view(), name="scoringsheet4_update"),
+    path('scoringseet3_update/<str:marker1>/<str:marker2>/<str:marker3>/<int:pk>', Scoringsheet3UpdateView.as_view(), name="scoringsheet3_update"),
 #    path('form_scoringsheet', ScoringsheetCreateFormsetView.as_view(), name="form_scoringsheet"),
 
 # Enmu Scoringsheet
     path('embuscoringsheet', EmbuscoringsheetListView.as_view(), name="embuscoringsheet"),
     path('embuscoringsheet_form', EmbuscoringsheetCreateView.as_view(), name="embuscoringsheet_form"),
     path('create_embuscoringsheet', EmbuscoringsheetCreateView.as_view(), name="create_embuscoringsheet"),
-    path('embuscoringseet_update/<int:pk>', EmbuscoringsheetUpdateView.as_view(), name="embuscoringsheet_update"),
+    path('embuscoringseet5_update/<str:marker1>/<str:marker2>/<str:marker3>/<str:marker4>/<str:marker5>/<int:pk>', Embuscoringsheet5UpdateView.as_view(), name="embuscoringsheet5_update"),
+    path('embuscoringseet4_update/<str:marker1>/<str:marker2>/<str:marker3>/<str:marker4>/<int:pk>', Embuscoringsheet4UpdateView.as_view(), name="embuscoringsheet4_update"),
+    path('embuscoringseet3_update/<str:marker1>/<str:marker2>/<str:marker3>/<int:pk>', Embuscoringsheet3UpdateView.as_view(), name="embuscoringsheet3_update"),
+#    path('embuscoringseet_update/<int:pk>', EmbuscoringsheetUpdateView.as_view(), name="embuscoringsheet_update"),
 
 # Admin
     path('admin/', admin.site.urls),
