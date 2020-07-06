@@ -143,6 +143,7 @@ class Testee(models.Model):
         validators=[
             MinLengthValidator(7, 'Seven digits'),
             RegexValidator(r'^[0-9]*$', 'only numbers')],
+        help_text="Please enter membership number(7digits). like ”0101001” (your dojo number(4 digits) + your dojo’s membership number(3 digits). ",
         blank=True,
         null=True
     )

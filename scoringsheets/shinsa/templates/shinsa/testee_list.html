@@ -21,8 +21,8 @@
     <h1>Members List</h1>
 
     {% for testee in object_list|slice:":1" %}
-        <h3> Selected Dojo is {{ testee.dojo.dojo_name_eng }}</h3><br>
-        <a href="{% url 'create_testee' %}?dojo={{ testee.dojo.id }}">
+        <h3> Selected Dojo is {{ dojos.dojo_number }} : {{ testee.dojo.dojo_name_eng }}</h3><br>
+        <a href="{% url 'create_testee' testee.dojo.dojo_number %}?dojo={{ testee.dojo.id }}" target="_blank">
             <button class="btn btn-primary">会員登録</button>
         </a>
         <input type="button" value="戻る" onClick="javascript:history.go(-1);">

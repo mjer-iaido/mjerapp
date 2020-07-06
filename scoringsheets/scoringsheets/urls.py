@@ -67,7 +67,7 @@ urlpatterns = [
     path('dojos', DojosListView.as_view(), name="dojos"),
 
 # Testee
-    path('create_testee', TesteeCreateView.as_view(), name="create_testee"),
+    path('create_testee/<str:dojo_number>', TesteeCreateView.as_view(), name="create_testee"),
     path('testee', TesteeListView.as_view(), name="testee"),
     path('testee/<int:pk>', TesteeDetailView.as_view(), name="testee_detail"),
     path('testee_update/<int:pk>', TesteeUpdateView.as_view(), name="testee_update"),

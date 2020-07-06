@@ -96,6 +96,7 @@ class TesteeUpdateView(UpdateView):
 class TesteeCreateView(CreateView):
     model = Testee
     fields = [
+        "membership_number",
         "testee_name",
         "testee_name_eng",
         "status",
@@ -103,6 +104,17 @@ class TesteeCreateView(CreateView):
         ]
     def get_success_url(self):
         return "".join([reverse('testee'),'?', urlencode(dict(dojo=self.request.GET.get('dojo')))])
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial["dojo"] = self.request.GET.get('dojo')
+        initial["membership_number"] = self.kwargs.get('dojo_number')
+        return initial
+
+#    def get_initial(self):
+#        initialDojoNumber = super().get_initial()
+#        initialDojoNumber["membership_number"] = self.kwargs.get('dojo_number')
+#        return initialDojoNumber
 
 class ScoringsheetListView(ListView):
     model = Scoringsheet
@@ -133,6 +145,11 @@ class ScoringsheetCreateView(CreateView):
         "events"
         ]
     success_url = reverse_lazy("scoringsheet_form")
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial["events"] = self.request.GET.get('event')
+        return initial
 
 class ScoringsheetDetailView(DetailView):
     model = Scoringsheet
@@ -220,6 +237,11 @@ class EmbuscoringsheetCreateView(CreateView):
         "events"
         ]
     success_url = reverse_lazy("embuscoringsheet_form")
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial["events"] = self.request.GET.get('event')
+        return initial
 
 class Embuscoringsheet5UpdateView(UpdateView):
     model = Embuscoringsheet
