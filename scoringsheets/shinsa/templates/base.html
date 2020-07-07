@@ -52,10 +52,12 @@
       <a class="brand-text font-weight-light">
         <h3>
           <a>MENU</a></br>
-          <li><a href="admin">Administrator</a></li>
-          <li><a href="/">Dash board</a></li>
-          <li><a href="{% url 'events' %}">Evens List</a></li>
-          <li><a href="{% url 'country' %}">Members List</a></li>
+          {% if user.is_authenticated %}
+              <li><a href="admin">Administrator</a></li>
+              <li><a href="/">Dash board</a></li>
+              <li><a href="{% url 'events' %}">Evens List</a></li>
+              <li><a href="{% url 'country' %}">Members List</a></li>
+          {% endif %}
         </h3>
       </a>
     </div>

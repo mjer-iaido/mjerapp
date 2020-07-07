@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 #from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import reverse
@@ -43,11 +44,14 @@ def exportpdf_shinsa(request):
     response['Content-Disposition'] = 'filename="shinsa_scoringsheet.pdf"'
     return response
 #weasyprint --end--
-class CountryListView(ListView):
-    model = Country
 
-class DojosListView(ListView):
+class CountryListView(LoginRequiredMixin, ListView):
+    model = Country
+    login_url = '/login/'
+
+class DojosListView(LoginRequiredMixin, ListView):
     model = Dojos
+    login_url = '/login/'
 
     def get_queryset(self):
         countryparam = self.request.GET.get('country')
@@ -55,13 +59,15 @@ class DojosListView(ListView):
                         Q(country__id=countryparam))
         return object_list
 
-class EventsListView(ListView):
+class EventsListView(LoginRequiredMixin, ListView):
     model = Events
+    login_url = '/login/'
 
-class EventsDetailView(DetailView):
+class EventsDetailView(LoginRequiredMixin, DetailView):
     model = Events
+    login_url = '/login/'
 
-class TesteeListView(ListView):
+class TesteeListView(LoginRequiredMixin, ListView):
     model = Testee
 
     def get_queryset(self):
@@ -70,10 +76,12 @@ class TesteeListView(ListView):
                         Q(dojo__id=dojoparam))
         return object_list
 
+    login_url = '/login/'
+
 class TesteeDetailView(DetailView):
     model = Testee
 
-class TesteeUpdateView(UpdateView):
+class TesteeUpdateView(LoginRequiredMixin, UpdateView):
     model = Testee
     fields = [
         "status",
@@ -92,8 +100,9 @@ class TesteeUpdateView(UpdateView):
     def get_success_url(self):
         return "".join([reverse('testee'),'?', urlencode(dict(dojo=self.request.GET.get('dojo')))])
 
+    login_url = '/login/'
 
-class TesteeCreateView(CreateView):
+class TesteeCreateView(LoginRequiredMixin, CreateView):
     model = Testee
     fields = [
         "membership_number",
@@ -104,6 +113,8 @@ class TesteeCreateView(CreateView):
         ]
     def get_success_url(self):
         return "".join([reverse('testee'),'?', urlencode(dict(dojo=self.request.GET.get('dojo')))])
+
+    login_url = '/login/'
 
     def get_initial(self):
         initial = super().get_initial()
@@ -130,7 +141,7 @@ class ScoringsheetListView(ListView):
         return object_list
 
 
-class ScoringsheetCreateView(CreateView):
+class ScoringsheetCreateView(LoginRequiredMixin, CreateView):
     model = Scoringsheet
     template_name = 'shinsa/scoringsheet_form.html'
     fields = [
@@ -146,6 +157,8 @@ class ScoringsheetCreateView(CreateView):
         ]
     success_url = reverse_lazy("scoringsheet_form")
 
+    login_url = '/login/'
+
     def get_initial(self):
         initial = super().get_initial()
         initial["events"] = self.request.GET.get('event')
@@ -155,7 +168,7 @@ class ScoringsheetDetailView(DetailView):
     model = Scoringsheet
     template_name = 'shinsa/scoringsheet_detail.html'
 
-class Scoringsheet5UpdateView(UpdateView):
+class Scoringsheet5UpdateView(LoginRequiredMixin, UpdateView):
     model = Scoringsheet
     fields = [
         "score1",
@@ -168,6 +181,8 @@ class Scoringsheet5UpdateView(UpdateView):
     def get_success_url(self):
         return "".join([reverse('scoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
 
+    login_url = '/login/'
+
     def get_form(self):
         form = super(Scoringsheet5UpdateView, self).get_form()
         form.fields['score1'].label = self.kwargs.get('marker1')
@@ -177,7 +192,7 @@ class Scoringsheet5UpdateView(UpdateView):
         form.fields['score5'].label = self.kwargs.get('marker5')
         return form
 
-class Scoringsheet4UpdateView(UpdateView):
+class Scoringsheet4UpdateView(LoginRequiredMixin, UpdateView):
     model = Scoringsheet
     fields = [
         "score1",
@@ -189,6 +204,8 @@ class Scoringsheet4UpdateView(UpdateView):
     def get_success_url(self):
         return "".join([reverse('scoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
 
+    login_url = '/login/'
+
     def get_form(self):
         form = super(Scoringsheet4UpdateView, self).get_form()
         form.fields['score1'].label = self.kwargs.get('marker1')
@@ -197,7 +214,7 @@ class Scoringsheet4UpdateView(UpdateView):
         form.fields['score4'].label = self.kwargs.get('marker4')
         return form
 
-class Scoringsheet3UpdateView(UpdateView):
+class Scoringsheet3UpdateView(LoginRequiredMixin, UpdateView):
     model = Scoringsheet
     fields = [
         "score1",
@@ -207,6 +224,8 @@ class Scoringsheet3UpdateView(UpdateView):
         ]
     def get_success_url(self):
         return "".join([reverse('scoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
+
+    login_url = '/login/'
 
     def get_form(self):
         form = super(Scoringsheet3UpdateView, self).get_form()
@@ -228,7 +247,7 @@ class EmbuscoringsheetListView(ListView):
                         Q(events__id=eventparam))
         return object_list
 
-class EmbuscoringsheetCreateView(CreateView):
+class EmbuscoringsheetCreateView(LoginRequiredMixin, CreateView):
     model = Embuscoringsheet
     template_name = 'shinsa/embuscoringsheet_form.html'
     fields = [
@@ -238,12 +257,14 @@ class EmbuscoringsheetCreateView(CreateView):
         ]
     success_url = reverse_lazy("embuscoringsheet_form")
 
+    login_url = '/login/'
+
     def get_initial(self):
         initial = super().get_initial()
         initial["events"] = self.request.GET.get('event')
         return initial
 
-class Embuscoringsheet5UpdateView(UpdateView):
+class Embuscoringsheet5UpdateView(LoginRequiredMixin, UpdateView):
     model = Embuscoringsheet
     fields = [
         "score1",
@@ -255,6 +276,8 @@ class Embuscoringsheet5UpdateView(UpdateView):
     def get_success_url(self):
         return "".join([reverse('embuscoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
 
+    login_url = '/login/'
+
     def get_form(self):
         form = super(Embuscoringsheet5UpdateView, self).get_form()
         form.fields['score1'].label = self.kwargs.get('marker1')
@@ -264,7 +287,7 @@ class Embuscoringsheet5UpdateView(UpdateView):
         form.fields['score5'].label = self.kwargs.get('marker5')
         return form
 
-class Embuscoringsheet4UpdateView(UpdateView):
+class Embuscoringsheet4UpdateView(LoginRequiredMixin, UpdateView):
     model = Embuscoringsheet
     fields = [
         "score1",
@@ -275,6 +298,8 @@ class Embuscoringsheet4UpdateView(UpdateView):
     def get_success_url(self):
         return "".join([reverse('embuscoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
 
+    login_url = '/login/'
+
     def get_form(self):
         form = super(Embuscoringsheet4UpdateView, self).get_form()
         form.fields['score1'].label = self.kwargs.get('marker1')
@@ -283,7 +308,7 @@ class Embuscoringsheet4UpdateView(UpdateView):
         form.fields['score4'].label = self.kwargs.get('marker4')
         return form
 
-class Embuscoringsheet3UpdateView(UpdateView):
+class Embuscoringsheet3UpdateView(LoginRequiredMixin, UpdateView):
     model = Embuscoringsheet
     fields = [
         "score1",
@@ -292,6 +317,8 @@ class Embuscoringsheet3UpdateView(UpdateView):
         ]
     def get_success_url(self):
         return "".join([reverse('embuscoringsheet'),'?', urlencode(dict(event=self.request.GET.get('event')))])
+
+    login_url = '/login/'
 
     def get_form(self):
         form = super(Embuscoringsheet3UpdateView, self).get_form()
