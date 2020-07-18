@@ -143,13 +143,14 @@ class Testee(models.Model):
         validators=[
             MinLengthValidator(7, 'Seven digits'),
             RegexValidator(r'^[0-9]*$', 'only numbers')],
-        help_text="Please enter membership number(7digits). like ”0101001” (your dojo number(4 digits) + your dojo’s membership number(3 digits). ",
+        help_text="Please enter membership number(7digits). like ”0101001” (your dojo number(4 digits) + your dojo’s membership number(3 digits). or space.",
         blank=True,
         null=True
     )
     testee_name = models.CharField(
         max_length=20,
-        verbose_name='Name Japanese'
+        verbose_name='Name Japanese',
+        help_text="English is okay if you difficult to enter Japanese.",
         )
     testee_name_eng = models.CharField(
         max_length=20,

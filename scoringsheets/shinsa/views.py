@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 #from django.shortcuts import get_object_or_404
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -17,7 +18,7 @@ from django.db.models import Q
 from .models import Events, Grade, Testee, Scoringsheet, Dojos, Country, Status, Embuscoringsheet
 from .forms import ScoringsheetForm
 
-#weasyprint --start--
+#weasyprint --staticstart--
 from django.template.loader import render_to_string
 from weasyprint import HTML, CSS
 import tempfile
@@ -38,6 +39,7 @@ def exportpdf_shinsa(request):
     pdf_file = HTML(request.GET.get('path')).write_pdf(
         stylesheets=[
             CSS(string='body { font-family: serif !important }'),
+#            CSS(settings.STATIC_URL + 'css/clean-blog.css'),
         ],
     )
     response = HttpResponse(pdf_file, content_type='application/pdf')
