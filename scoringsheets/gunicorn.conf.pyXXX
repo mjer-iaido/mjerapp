@@ -1,0 +1,18 @@
+# bind = 'unix:/var/run/scoringsheets.sock'
+bind = '127.0.0.1:8000'
+workers = 2
+worker_connections = 1000
+max_requests = 1000
+ 
+debug = True
+daemon = True
+pidfile = '/var/run/scoringsheets.pid'
+ 
+user = 'nginx'
+group = 'nginx'
+ 
+errorlog = '/var/log/gunicorn/scoringsheets-error.log'
+accesslog = '/var/log/gunicorn/scoringsheets-access.log'
+ 
+loglevel = 'info'
+proc_name = 'scoringsheets'
