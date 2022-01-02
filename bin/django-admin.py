@@ -1,4 +1,4 @@
-#!/Users/touma/project/scorings/bin/python3
+#!/Users/touma/project/mjerapp/bin/python3
 from django.core import management
 
 if __name__ == "__main__":
