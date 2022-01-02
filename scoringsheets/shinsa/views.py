@@ -20,7 +20,11 @@ from .forms import ScoringsheetForm
 
 #weasyprint --staticstart--
 from django.template.loader import render_to_string
+# from weasyprint import HTML, CSS
+from django_weasyprint import WeasyTemplateResponseMixin
+from django_weasyprint.views import WeasyTemplateResponse
 from weasyprint import HTML, CSS
+
 import tempfile
 
 # Create your views here.

@@ -1,4 +1,4 @@
-#!/Users/touma/project/scorings/bin/python
+#!/Users/touma/project/mjerapp/bin/python
 
 import sys
 import getopt
